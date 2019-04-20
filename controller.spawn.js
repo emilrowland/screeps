@@ -10,12 +10,18 @@ module.exports = {
     
             //Roles
             const numOfConstructionSites = spawn.room.find(FIND_CONSTRUCTION_SITES).length;
+            const numOfContainers = spawn.room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_CONTAINER}}).length;
 
             const roles = {
                 harvester: {
                     min: 2,
                     max: 4,
                     body: [WORK, CARRY, MOVE]
+                },
+                carrier: {
+                    min: numOfContainers,
+                    max: numOfContainers,
+                    body: [CARRY, CARRY, MOVE]
                 },
                 upgrader: {
                     min: 1,

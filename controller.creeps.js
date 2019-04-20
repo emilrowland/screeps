@@ -3,6 +3,7 @@ const roleUpgrader = require('role.upgrader');
 const roleDefender = require('role.defender');
 const roleBuilder = require('role.builder');
 const roleRepairer = require('role.repairer');
+const roleCarrier = require('role.carrier');
 
 module.exports = {
     run: function(){
@@ -19,6 +20,8 @@ module.exports = {
                 roleBuilder.run(creep);
             }else if(creep.memory.role === 'repairer'){
                 roleRepairer.run(creep);
+            }else if(creep.memory.role === 'carrier'){
+                roleCarrier.run(creep);
             }
         }
         const elapsed = Game.cpu.getUsed() - startCpu;
