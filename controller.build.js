@@ -64,12 +64,12 @@ function buildContainers(room){
     //Place containers at source
     const sources = room.find(FIND_SOURCES);
     for(let source of sources){
-        if(source.pos.findInRange(FIND_STRUCTURES, 2, {filter: { structureType: STRUCTURE_CONTAINER }}).length > 0){
+        if(source.pos.findInRange(FIND_STRUCTURES, 1, {filter: { structureType: STRUCTURE_CONTAINER }}).length > 0){
             continue;
         }
-        const validBuildPos = source.pos.findWalkableOnRange(2);
+        const validBuildPos = source.pos.findWalkableOnRange(1);
         const pos = room.find(FIND_MY_SPAWNS)[0].pos.findClosestByPath(validBuildPos, {ignoreCreeps: true});
-        room.createConstructionSite(pos, STRUCTURE_CONTAINER);
+        console.log(room.createConstructionSite(pos, STRUCTURE_CONTAINER));
     }
 }
 

@@ -6,10 +6,15 @@ module.exports = {
             if(inventory === 0){
                 creep.memory.working = false;
             }else{
-                //Transfer energy to spawn
-                const spawn = Game.getObjectById(creep.memory.spawn);
-                if(creep.transfer(spawn, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
-                    creep.moveTo(spawn);
+                //Transfer energy to structure
+                const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {filter: s => {
+                    if(s.structureType === STRUCTURE_EXTENSION || s.structureType === STRUCTURE_SPAWN){
+                        return (s.energyCapacity - s.energy) > 0
+                    }
+                    return false;
+                }});
+                if(creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                    creep.moveTo(target);
                 }
             }
         }else{
@@ -18,10 +23,16 @@ module.exports = {
                 creep.memory.working = true;
             }else{
                 //Sweep resources
-                const targets = creep.room.find(FIND_DROPPED_RESOURCES);
+                let targets = creep.room.find(FIND_DROPPED_RESOURCES);
                 if(targets.length) {
                     creep.moveTo(targets[0]);
                     creep.pickup(targets[0]);
+                    return;
+                }
+                targets = creep.room.find(FIND_TOMBSTONES);
+                if(targets.length) {
+                    creep.moveTo(targets[0]);
+                    creep.withdraw(target[0], RESOURCES_ALL);
                 }
             }
         }

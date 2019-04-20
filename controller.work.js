@@ -15,10 +15,6 @@ module.exports = {
                     creep.memory.source = sources[0].id;
                     creep.memory.controller = creep.room.controller.id;
                 }
-            }else if(creep.memory.role === 'carrier'){
-                if(creep.memory.spawn === undefined){
-                    creep.memory.spawn = creep.room.find(FIND_MY_SPAWNS)[0].id;
-                }
             }else if(creep.memory.role === 'defender'){
                 if(creep.memory.guardPos === undefined){
                     let exits = creep.room.find(FIND_EXIT);
