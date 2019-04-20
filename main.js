@@ -2,6 +2,7 @@ const controllerSpawn = require('controller.spawn');
 const controllerBuild = require('controller.build');
 const controllerCreeps = require('controller.creeps');
 const controllerWork = require('controller.work');
+const controllerStats = require('controller.stats');
 
 //Init memory structure
 if(Memory.rooms === undefined){
@@ -15,6 +16,9 @@ module.exports.loop = function () {
             delete Memory.creeps[creepName];
         }
     }
+
+    //Update stats
+    controllerStats.run();
 
     //Controll creeps
     controllerWork.run();

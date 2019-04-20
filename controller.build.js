@@ -31,7 +31,13 @@ module.exports = {
         for(let roomName in Game.rooms){
             const room = Game.rooms[roomName];
             if(room.controller.my){
-                buildContainers(room);
+                const controllerLevel = room.controller.level;
+                if(controllerLevel >= 2){
+                    buildExtensions(room);
+                }
+                if(controllerLevel >= 3){
+                    buildContainers(room);
+                }
             }
         }
         const elapsed = Game.cpu.getUsed() - startCpu;
@@ -64,5 +70,22 @@ function buildContainers(room){
         const validBuildPos = source.pos.findWalkableOnRange(2);
         const pos = room.find(FIND_MY_SPAWNS)[0].pos.findClosestByPath(validBuildPos, {ignoreCreeps: true});
         room.createConstructionSite(pos, STRUCTURE_CONTAINER);
+    }
+}
+
+function buildExtensions(room){
+    let extensions = CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][room.controller.level] - room.find(FIND_STRUCTURES, {filter: {structureType: STRUCTURE_EXTENSION}});
+    const sources = room.find(FIND_SOURCES);
+    for(let source of sources){
+        let maxBuild = Math.ceil(extensions/sources.length);
+        const validBuildPos = source.pos.findWalkableOnRange(3);
+        for(let pos of validBuildPos){
+            if(pos.lookFor(LOOK_STRUCTURES).length === 0 && pos.lookFor(LOOK_CONSTRUCTION_SITES).length === 0 && pos.x > 3 && pos.x < 47 && pos.y > 3 && pos.y < 47){
+                if(maxBuild > 0 && extensions-- > 0){
+                    room.createConstructionSite(pos, STRUCTURE_EXTENSION);
+                    maxBuild--;
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,12 @@ module.exports = {
                 const target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
                 if(creep.build(target) === ERR_NOT_IN_RANGE){
                     creep.moveTo(target);
+                }else if(target === null){
+                    //Recycle me
+                    const spawn = creep.room.find(FIND_MY_SPAWNS)[0];
+                    if(spawn.recycleCreep(creep) === ERR_NOT_IN_RANGE){
+                        creep.moveTo(spawn);
+                    }
                 }
             }
         }else{

@@ -19,7 +19,7 @@ module.exports = {
                     body: [WORK, CARRY, MOVE]
                 },
                 carrier: {
-                    min: numOfContainers,
+                    min: numOfContainers > 0? 1 : 0,
                     max: numOfContainers,
                     body: [CARRY, CARRY, MOVE]
                 },
