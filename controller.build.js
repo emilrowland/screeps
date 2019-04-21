@@ -34,8 +34,6 @@ module.exports = {
                 const controllerLevel = room.controller.level;
                 if(controllerLevel >= 2){
                     buildExtensions(room);
-                }
-                if(controllerLevel >= 3){
                     buildContainers(room);
                 }
             }
@@ -49,7 +47,7 @@ function buildRoads(spawn){
     const sources = spawn.room.find(FIND_SOURCES);
     sources.push(spawn.room.controller);
     for(let source of sources){
-        const path = spawn.room.findPath(spawn.pos, source.pos, {ignoreCreeps: true});
+        const path = spawn.room.findPath(spawn.pos, source.pos, {ignoreCreeps: true, swampCost: 1});
         for(let pos of path){
             pos = new RoomPosition(pos.x, pos.y, spawn.room.name);
             //Don't build on Structures or sources

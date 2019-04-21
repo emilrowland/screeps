@@ -32,7 +32,7 @@ module.exports = {
                 targets = creep.room.find(FIND_TOMBSTONES);
                 if(targets.length) {
                     creep.moveTo(targets[0]);
-                    creep.withdraw(target[0], RESOURCES_ALL);
+                    creep.withdraw(targets[0], RESOURCES_ALL);
                 }
             }
         }

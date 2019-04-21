@@ -47,7 +47,7 @@ module.exports = {
 
             //Count
             const myCreeps = spawn.room.find(FIND_MY_CREEPS);
-            for(roleName in roles){
+            for(let roleName in roles){
                 const role = roles[roleName]
                 role.num = _.sum(myCreeps, (c) => c.memory.role === roleName);
                 console.log(roleName + ': ' + role.num );
@@ -56,7 +56,7 @@ module.exports = {
             let spawnRole = undefined;
             let spawnBody = undefined;
             //Min
-            for(roleName in roles){
+            for(let roleName in roles){
                 const role = roles[roleName]
                 if(role.num < role.min){
                     spawnRole = roleName;
@@ -66,7 +66,7 @@ module.exports = {
             }
             if(spawnRole === undefined){
                //Max
-                for(roleName in roles){
+                for(let roleName in roles){
                     const role = roles[roleName]
                     if(role.num < role.max){
                         spawnRole = roleName;
